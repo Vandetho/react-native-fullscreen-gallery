@@ -1,0 +1,46 @@
+{
+    "name": "react-native-fullscreen-gallery",
+    "version": "1.0.0-alpha.1.2",
+    "private": false,
+    "files": [
+        "lib/",
+        "src/"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vandetho/react-native-fullscreen-gallery.git"
+    },
+    "scripts": {
+        "prepublishOnly": "bob build",
+        "initialize": "npm i && cd Example && npm i && npx pod-install"
+    },
+    "peerDependencies": {
+        "react": "*",
+        "react-native": "*",
+        "react-native-gesture-handler": "*",
+        "react-native-web": "^0.17.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.15.5",
+        "@babel/preset-typescript": "^7.15.0",
+        "@types/react": "^17.0.24",
+        "@types/react-native": "~0.63.2",
+        "@typescript-eslint/eslint-plugin": "^4.31.2",
+        "@typescript-eslint/parser": "^4.31.2",
+        "babel-preset-expo": "^8.4.1",
+        "react": "16.13.1",
+        "react-native": "0.63.4",
+        "react-native-web": "^0.17.1",
+        "eslint": "^7.32.0",
+        "eslint-plugin-import": "^2.24.2",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-react": "^7.26.0",
+        "eslint-plugin-react-hooks": "^4.2.0",
+        "prettier": "^2.4.1",
+        "typescript": "^4.4.3"
+    },
+    "jest": {
+        "preset": "react-native"
+    }
+}
