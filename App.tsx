@@ -1,7 +1,6 @@
 import React from 'react';
-import { IMAGES } from './images';
-import { Gallery } from './src';
+import { AppNavigator } from './navigation';
 
 export default function App() {
-    return <Gallery images={IMAGES} horizontal={false} />;
+    return <AppNavigator />;
 }

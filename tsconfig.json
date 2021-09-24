@@ -1,16 +1,22 @@
 {
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "react-native-fullscreen-gallery": ["./src/index"]
+      "react-native-fullscreen-gallery": [
+        "./src/index"
+      ]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
@@ -23,6 +29,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-    "isolatedModules": true,
-  }
+    "isolatedModules": true
+  },
+  "extends": "expo/tsconfig.base"
 }
