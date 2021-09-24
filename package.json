@@ -1,13 +1,13 @@
 {
     "name": "react-native-fullscreen-gallery",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "private": false,
-    "main": "./node_modules/expo/AppEntry.js",
-    "_main": "./src/index.js",
-    "typings": "./src/index.d.ts",
+    "_main": "./node_modules/expo/AppEntry.js",
+    "main": "./dist/index.js",
+    "typings": "./dist/index.d.ts",
+    "license": "MIT",
     "files": [
-        "lib/",
-        "src/"
+        "dist"
     ],
     "homepage": "https://github.com/vandetho/react-native-fullscreen-gallery",
     "repository": {
@@ -15,8 +15,14 @@
         "url": "https://github.com/vandetho/react-native-fullscreen-gallery"
     },
     "scripts": {
-        "prepublishOnly": "bob build",
-        "initialize": "npm i && cd Example && npm i && npx pod-install"
+        "start": "expo start",
+        "eject": "expo eject",
+        "android": "expo start --android",
+        "ios": "expo start --ios",
+        "test": "jest",
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "prepublish": "yarn build"
     },
     "dependencies": {
         "@react-navigation/stack": "^6.0.7",
