@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "gallery",
-    "slug": "gallery",
+    "name": "react-native-fullscreen-gallery",
+    "slug": "react-native-fullscreen-gallery",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
