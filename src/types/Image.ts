@@ -1,3 +1,7 @@
+import { ImageProps } from 'react-native';
+
 export interface Image {
-    src: string;
+    url?: string;
+    src?: string;
+    props: ImageProps;
 }
