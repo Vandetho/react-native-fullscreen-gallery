@@ -1,5 +1,6 @@
 import React from 'react';
-import { Dimensions, FlatList, Image, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { Dimensions, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import ImageItem from './ImageItem';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('screen');
 
@@ -24,10 +25,7 @@ const PreviewGallery: React.FunctionComponent<PreviewGalleryProps> = ({
         }
     }, [activeImage, images]);
 
-    const renderItem = React.useCallback(
-        ({ item }) => <Image source={item} style={{ width: WIDTH, height: HEIGHT }} resizeMode="cover" />,
-        [],
-    );
+    const renderItem = React.useCallback(({ item }) => <ImageItem image={item} />, []);
 
     const onMomentumScrollEnd = React.useCallback(
         (event: NativeSyntheticEvent<NativeScrollEvent>) => {

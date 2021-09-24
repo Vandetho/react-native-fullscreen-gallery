@@ -1,5 +1,6 @@
 import React from 'react';
 import { Animated, Dimensions, Image, StyleSheet, View } from 'react-native';
+import ImageItem from './ImageItem';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 const DOT_SIZE = 8;
@@ -25,22 +26,18 @@ const styles = StyleSheet.create({
         width: DOT_SIZE,
         height: DOT_SIZE,
         borderRadius: DOT_SIZE,
-        backgroundColor: '#FFFFFF',
         marginRight: DOT_SIZE,
     },
     verticalDot: {
         width: DOT_SIZE,
         height: DOT_SIZE,
         borderRadius: DOT_SIZE,
-        backgroundColor: '#FFFFFF',
         marginBottom: DOT_SIZE,
     },
     horizontalDotIndicator: {
         width: DOT_INDICATOR_SIZE,
         height: DOT_INDICATOR_SIZE,
         borderRadius: DOT_INDICATOR_SIZE,
-        borderColor: '#FFFFFF',
-        borderWidth: 1,
         position: 'absolute',
         top: -DOT_SIZE / 2,
         left: -DOT_SIZE / 2,
@@ -49,34 +46,34 @@ const styles = StyleSheet.create({
         width: DOT_INDICATOR_SIZE,
         height: DOT_INDICATOR_SIZE,
         borderRadius: DOT_INDICATOR_SIZE,
-        borderColor: '#FFFFFF',
-        borderWidth: 1,
         position: 'absolute',
         top: -DOT_SIZE / 2,
         left: -DOT_SIZE / 2,
     },
 });
 
-interface ImageGalleryProps {
+interface DotGalleryProps {
     images: any[];
     horizontal?: boolean;
+    dotColor?: string;
 }
 
-const ImageGallery: React.FunctionComponent<ImageGalleryProps> = ({ images, horizontal = true }) => {
+const DotGallery: React.FunctionComponent<DotGalleryProps> = ({ images, horizontal = true, dotColor = '#FFFFFF' }) => {
     const scrollX = React.useRef(new Animated.Value(0)).current;
     const scrollY = React.useRef(new Animated.Value(0)).current;
 
-    const renderImage = React.useCallback(({ item }) => {
-        return <Image source={item} resizeMode="cover" style={{ width: WIDTH, height: HEIGHT }} />;
-    }, []);
+    const renderImage = React.useCallback(({ item }) => <ImageItem image={item} />, []);
 
     const snapToInterval = React.useMemo(() => (horizontal ? WIDTH : HEIGHT), [horizontal]);
 
     const dotStyle = React.useMemo(() => (horizontal ? styles.horizontalDot : styles.verticalDot), [horizontal]);
 
     const renderIndicators = React.useCallback(
-        () => images.map((_, index) => <View key={`image-gallery-${index}-indicator`} style={dotStyle} />),
-        [dotStyle, images],
+        () =>
+            images.map((_, index) => (
+                <View key={`image-gallery-${index}-indicator`} style={[dotStyle, { backgroundColor: dotColor }]} />
+            )),
+        [dotColor, dotStyle, images],
     );
 
     const keyExtractor = React.useCallback((_, index) => `image-gallery-${index}`, []);
@@ -98,9 +95,11 @@ const ImageGallery: React.FunctionComponent<ImageGalleryProps> = ({ images, hori
                     data={images}
                     renderItem={renderImage}
                     showsHorizontalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
                     horizontal={horizontal}
                     snapToInterval={snapToInterval}
                     decelerationRate="fast"
+                    disableIntervalMomentum
                     bounces={false}
                     onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY, x: scrollX } } }], {
                         useNativeDriver: true,
@@ -113,6 +112,7 @@ const ImageGallery: React.FunctionComponent<ImageGalleryProps> = ({ images, hori
                 <Animated.View
                     style={[
                         dotIndicatorStyle,
+                        { backgroundColor: dotColor },
                         {
                             transform: [
                                 {
@@ -136,4 +136,4 @@ const ImageGallery: React.FunctionComponent<ImageGalleryProps> = ({ images, hori
     );
 };
 
-export default ImageGallery;
+export default DotGallery;
