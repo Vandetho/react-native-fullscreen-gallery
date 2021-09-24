@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Dimensions, Image, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import ImageItem from './ImageItem';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
