@@ -31,7 +31,9 @@ const PreviewGallery: React.FunctionComponent<PreviewGalleryProps> = ({
         (event: NativeSyntheticEvent<NativeScrollEvent>) => {
             const { nativeEvent } = event;
             const index = horizontal ? nativeEvent.contentOffset.x / WIDTH : nativeEvent.contentOffset.y / HEIGHT;
-            onChangeActiveImage(index);
+            if (index >= 0) {
+                onChangeActiveImage(index);
+            }
         },
         [horizontal, onChangeActiveImage],
     );
