@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
-import ImageItem from './ImageItem';
+import ImageItem from '../ImageItem';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('screen');
 
@@ -59,7 +59,7 @@ const PreviewGallery: React.FunctionComponent<PreviewGalleryProps> = ({
             showsHorizontalScrollIndicator={false}
             disableIntervalMomentum
             onMomentumScrollEnd={onMomentumScrollEnd}
-            scrollEventThrottle={18}
+            scrollEventThrottle={32}
             snapToInterval={snapToInterval}
             getItemLayout={getItemLayout}
             ref={galleryRef}

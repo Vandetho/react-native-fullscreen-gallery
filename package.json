@@ -15,33 +15,28 @@
         "url": "https://github.com/vandetho/react-native-fullscreen-gallery"
     },
     "scripts": {
-        "start": "expo start",
-        "eject": "expo eject",
-        "android": "expo start --android",
-        "ios": "expo start --ios",
         "test": "jest",
         "build": "tsc",
         "dev": "tsc --watch",
         "prepublish": "yarn build"
     },
     "dependencies": {
-        "@react-navigation/stack": "^6.0.7",
-        "@react-navigation/native": "^6.0.2",
-        "expo": "~42.0.1",
-        "expo-status-bar": "~1.0.4",
         "react": "16.13.1",
         "react-dom": "16.13.1",
-        "react-native-gesture-handler": "^1.10.3",
         "react-native": "0.63.4",
+        "react-native-gesture-handler": "^1.10.3",
+        "react-native-svg": "^12.1.1",
         "react-native-web": "~0.13.12"
     },
     "peerDependencies": {
         "react": ">=16.13.1",
         "react-native": ">=0.63.4",
+        "react-native-svg": ">=12.1.1",
         "react-native-gesture-handler": "*",
         "react-native-web": "^0.17.1"
     },
     "devDependencies": {
+        "@types/node": "^16.9.6",
         "@babel/core": "^7.15.5",
         "@babel/preset-typescript": "^7.15.0",
         "@types/react": "^17.0.24",
@@ -50,8 +45,8 @@
         "@typescript-eslint/parser": "^4.31.2",
         "babel-preset-expo": "^8.4.1",
         "eslint": "^7.32.0",
-        "eslint-plugin-import": "^2.24.2",
         "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.24.2",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-react": "^7.26.0",
         "eslint-plugin-react-hooks": "^4.2.0",
