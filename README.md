@@ -23,4 +23,4 @@ Prop | Description | Type | Required | Default
 `horizontal` | Scroll Orientation | `boolean` |  | `true`
 `indicatorMode` | Indicator mode | `thumbnail` `dot` | | `thumbnail`
 `dotColor` | Indicator Color | `string` | | `#FFFFFF`
-`dotType` | Indicator mode | `expand` `rotary` `fade` `liquid` | | `expand`
+`dotType` | Indicator animation type | `expand` `rotary` `fade` `liquid` | | `expand`
