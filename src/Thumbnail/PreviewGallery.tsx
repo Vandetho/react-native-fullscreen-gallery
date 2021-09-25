@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { Animated, Dimensions, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import ImageItem from '../ImageItem';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('screen');
@@ -8,6 +8,8 @@ interface PreviewGalleryProps {
     images: any[];
     activeImage: number;
     horizontal?: boolean;
+    scrollX: Animated.Value;
+    scrollY: Animated.Value;
     onChangeActiveImage: (index: number) => void;
 }
 
@@ -15,6 +17,8 @@ const PreviewGallery: React.FunctionComponent<PreviewGalleryProps> = ({
     images,
     activeImage,
     horizontal = true,
+    scrollX,
+    scrollY,
     onChangeActiveImage,
 }) => {
     const galleryRef = React.useRef<FlatList>(null);
@@ -48,19 +52,25 @@ const PreviewGallery: React.FunctionComponent<PreviewGalleryProps> = ({
         [horizontal],
     );
 
+    const keyExtractor = React.useCallback((_, index) => `image-gallery-${index}`, []);
+
     return (
-        <FlatList
+        <Animated.FlatList
             data={images}
             renderItem={renderItem}
-            keyExtractor={(_, index) => `gallery-${index}`}
-            horizontal={horizontal}
-            decelerationRate="fast"
-            showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            horizontal={horizontal}
+            snapToInterval={snapToInterval}
+            decelerationRate="fast"
             disableIntervalMomentum
+            bounces={false}
+            onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY, x: scrollX } } }], {
+                useNativeDriver: true,
+            })}
+            keyExtractor={keyExtractor}
             onMomentumScrollEnd={onMomentumScrollEnd}
             scrollEventThrottle={32}
-            snapToInterval={snapToInterval}
             getItemLayout={getItemLayout}
             ref={galleryRef}
         />

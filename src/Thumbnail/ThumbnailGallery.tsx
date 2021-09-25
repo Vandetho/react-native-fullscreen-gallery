@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import IndicatorGallery from './IndicatorGallery';
 import PreviewGallery from './PreviewGallery';
 
@@ -27,6 +27,8 @@ interface ThumbnailGalleryProps {
 }
 
 const ThumbnailGallery: React.FunctionComponent<ThumbnailGalleryProps> = ({ images, horizontal = true }) => {
+    const scrollX = React.useRef(new Animated.Value(0)).current;
+    const scrollY = React.useRef(new Animated.Value(0)).current;
     const [activeImage, setActiveImage] = React.useState<number>(0);
 
     const indicatorStyle = React.useMemo(
@@ -40,6 +42,8 @@ const ThumbnailGallery: React.FunctionComponent<ThumbnailGalleryProps> = ({ imag
                 horizontal={horizontal}
                 images={images}
                 activeImage={activeImage}
+                scrollX={scrollX}
+                scrollY={scrollY}
                 onChangeActiveImage={setActiveImage}
             />
             <View style={indicatorStyle}>
@@ -47,6 +51,8 @@ const ThumbnailGallery: React.FunctionComponent<ThumbnailGalleryProps> = ({ imag
                     horizontal={horizontal}
                     images={images}
                     activeImage={activeImage}
+                    scrollX={scrollX}
+                    scrollY={scrollY}
                     onChangeActiveImage={setActiveImage}
                 />
             </View>

@@ -1,5 +1,7 @@
 import React from 'react';
-import { FlatList, Image, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { FlatList, Animated, StyleSheet, TouchableWithoutFeedback, View, Image, Dimensions } from 'react-native';
+
+const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     horizontalContainer: {
@@ -20,6 +22,8 @@ interface IndicatorGalleryProps {
     images: any[];
     activeImage: number;
     horizontal?: boolean;
+    scrollX: Animated.Value;
+    scrollY: Animated.Value;
     onChangeActiveImage: (index: number) => void;
 }
 
@@ -27,6 +31,8 @@ const IndicatorGallery: React.FunctionComponent<IndicatorGalleryProps> = ({
     images,
     activeImage,
     horizontal = true,
+    scrollX,
+    scrollY,
     onChangeActiveImage,
 }) => {
     const indicatorRef = React.useRef<FlatList>(null);
@@ -46,23 +52,72 @@ const IndicatorGallery: React.FunctionComponent<IndicatorGalleryProps> = ({
         [onChangeActiveImage],
     );
 
+    const measure = React.useMemo(() => (horizontal ? WIDTH : HEIGHT), [horizontal]);
+
+    const scroll = React.useMemo(() => (horizontal ? scrollX : scrollY), [horizontal, scrollX, scrollY]);
+
+    const inputRange = React.useMemo(() => images.map((_, index) => measure * index), [images, measure]);
+
     const renderItem = React.useCallback(
-        ({ item, index }: { item: any; index: number }) => (
-            <TouchableWithoutFeedback onPress={() => onPress(index)}>
-                <Image
-                    source={item}
-                    style={{
-                        width: 100,
-                        height: 100,
-                        borderColor: index === activeImage ? '#FFFFFF' : '#000000',
-                        borderWidth: 5,
-                        borderRadius: 30,
-                    }}
-                    resizeMode="cover"
-                />
-            </TouchableWithoutFeedback>
-        ),
-        [activeImage, onPress],
+        ({ item, index }: { item: any; index: number }) => {
+            const outputRange = images.map((_, i) => (index === i ? 12 : 1));
+
+            const scaleXSize = scroll.interpolate({
+                inputRange: inputRange,
+                outputRange: outputRange,
+            });
+
+            const scaleYSize = scroll.interpolate({
+                inputRange: inputRange,
+                outputRange: outputRange,
+            });
+
+            return (
+                <TouchableWithoutFeedback onPress={() => onPress(index)}>
+                    <View
+                        style={{
+                            position: 'relative',
+                            backgroundColor: '#000000',
+                            zIndex: 10,
+                            width: 100,
+                            height: 100,
+                            padding: 5,
+                            borderRadius: 30,
+                            overflow: 'hidden',
+                        }}
+                    >
+                        <Image
+                            source={item}
+                            style={{
+                                width: 90,
+                                height: 90,
+                                zIndex: 1000,
+                                borderRadius: 25,
+                            }}
+                            resizeMode="cover"
+                        />
+                        <Animated.View
+                            style={[
+                                {
+                                    width: 10,
+                                    height: 10,
+                                    backgroundColor: '#FFFFFF',
+                                    position: 'absolute',
+                                    top: 100 / 2 - 5,
+                                    left: 100 / 2 - 5,
+                                    zIndex: 100,
+                                    borderRadius: 2,
+                                },
+                                {
+                                    transform: [{ scaleX: scaleXSize }, { scaleY: scaleYSize }],
+                                },
+                            ]}
+                        />
+                    </View>
+                </TouchableWithoutFeedback>
+            );
+        },
+        [images, inputRange, onPress, scroll],
     );
 
     const contentContainerStyle = React.useMemo(
