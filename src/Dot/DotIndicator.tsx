@@ -75,6 +75,7 @@ const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
                         {
                             width: dotSize,
                             height: dotSize,
+                            borderRadius: dotSize / 2,
                             position: 'absolute',
                         },
                         { backgroundColor: dotColor },
