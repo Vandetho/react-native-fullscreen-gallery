@@ -1,6 +1,6 @@
 {
     "name": "react-native-fullscreen-gallery",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "private": false,
     "_main": "./node_modules/expo/AppEntry.js",
     "main": "./dist/index.js",
