@@ -1,3 +1,3 @@
 export * from './Image';
 
-export type DotType = 'expand' | 'rotary' | 'fade' | 'liquid';
+export type DotType = 'expand' | 'fade' | 'liquid' | 'rotary' | 'zoom';

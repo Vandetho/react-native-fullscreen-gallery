@@ -5,3 +5,4 @@ export { default as ExpandDot } from './ExpandDot';
 export { default as FadeDot } from './FadeDot';
 export { default as LiquidDot } from './LiquidDot';
 export { default as RotaryDot } from './RotaryDot';
+export { default as ZoomDot } from './ZoomDot';

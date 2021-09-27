@@ -5,6 +5,7 @@ import ExpandDot from './ExpandDot';
 import RotaryDot from './RotaryDot';
 import FadeDot from './FadeDot';
 import LiquidDot from './LiquidDot';
+import ZoomDot from './ZoomDot';
 
 interface DotProps {
     inputRange: number[];
@@ -23,6 +24,7 @@ const Dot: React.FunctionComponent<DotProps> = ({ dotType, ...props }) => {
             rotary: <RotaryDot {...props} />,
             fade: <FadeDot {...props} />,
             liquid: <LiquidDot {...props} />,
+            zoom: <ZoomDot {...props} />,
         }),
         [props],
     );
