@@ -23,6 +23,7 @@ Prop | Required | Description | Type | Default
 `horizontal` |  | Scroll Orientation | `boolean` | `true`
 `indicatorMode` |  | Indicator mode | `thumbnail` `dot` | `thumbnail`
 `slideAnimationType` |  | Slide animation Type | `slide` `zoom` `fade` | `slide`
+`dotSize` |  | Indicator Size | `number` | `10`
 `dotColor` |  | Indicator Color | `string` | `#FFFFFF`
 `dotType` |  | Indicator animation type | `expand` `rotary` `fade` `liquid` | `expand`
 `withZoom` |  | Only work with liquid animation for a zoom out effect | `boolean` | `false`

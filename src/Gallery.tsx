@@ -9,6 +9,8 @@ interface GalleryProps {
     horizontal?: boolean;
     indicatorMode?: 'thumbnail' | 'dot';
     slideAnimationType?: SlideAnimationType;
+    roundDot?: boolean;
+    dotSize?: number;
     dotColor?: string;
     dotType?: DotType;
     withZoom?: boolean;
@@ -18,6 +20,8 @@ const Gallery: React.FunctionComponent<GalleryProps> = ({
     images,
     horizontal = true,
     withZoom = false,
+    roundDot = false,
+    dotSize = 10,
     indicatorMode = 'thumbnail',
     dotColor = '#FFFFFF',
     dotType = 'expand',
@@ -32,12 +36,14 @@ const Gallery: React.FunctionComponent<GalleryProps> = ({
                 images={images}
                 horizontal={horizontal}
                 dotType={dotType}
+                dotSize={dotSize}
                 withZoom={withZoom}
+                roundDot={roundDot}
                 dotColor={dotColor}
                 slideAnimationType={slideAnimationType}
             />
         );
-    }, [dotColor, dotType, horizontal, images, indicatorMode, slideAnimationType, withZoom]);
+    }, [dotColor, dotSize, dotType, horizontal, images, indicatorMode, roundDot, slideAnimationType, withZoom]);
 };
 
 export default Gallery;

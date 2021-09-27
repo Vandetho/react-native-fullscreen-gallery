@@ -16,7 +16,9 @@ const styles = StyleSheet.create({
 interface DotGalleryProps {
     images: ImageSourcePropType[];
     slideAnimationType: SlideAnimationType;
+    roundDot: boolean;
     horizontal?: boolean;
+    dotSize: number;
     withZoom?: boolean;
     dotColor?: string;
     dotType?: DotType;
@@ -24,11 +26,13 @@ interface DotGalleryProps {
 
 const DotGallery: React.FunctionComponent<DotGalleryProps> = ({
     images,
+    slideAnimationType,
+    dotSize,
     horizontal = true,
+    roundDot = false,
     withZoom = false,
     dotColor = '#FFFFFF',
     dotType = 'expand',
-    slideAnimationType = 'slide',
 }) => {
     const scrollX = React.useRef(new Animated.Value(0)).current;
     const scrollY = React.useRef(new Animated.Value(0)).current;
@@ -92,6 +96,8 @@ const DotGallery: React.FunctionComponent<DotGalleryProps> = ({
                 inputRange={inputRange}
                 dotType={dotType}
                 dotColor={dotColor}
+                dotSize={dotSize}
+                roundDot={roundDot}
                 horizontal={horizontal}
                 withZoom={withZoom}
                 images={images}

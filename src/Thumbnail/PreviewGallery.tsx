@@ -14,7 +14,7 @@ const { width: WIDTH, height: HEIGHT } = Dimensions.get('screen');
 
 interface PreviewGalleryProps {
     images: ImageSourcePropType[];
-    slideAnimationType?: SlideAnimationType;
+    slideAnimationType: SlideAnimationType;
     activeImage: number;
     horizontal?: boolean;
     scrollX: Animated.Value;

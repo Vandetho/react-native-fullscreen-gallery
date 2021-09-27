@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Dimensions, Image as RNImage, ImageSourcePropType } from 'react-native';
+import { Animated, Dimensions, ImageSourcePropType } from 'react-native';
 import { SlideAnimationType } from './types';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
@@ -19,38 +19,47 @@ const ImageItem: React.FunctionComponent<ImageItemProps> = ({
     index,
     scrollDirection,
 }) => {
-    const zoom = React.useCallback(() => {
-        const scale = scrollDirection.interpolate({
+    const config = React.useMemo(
+        () => ({
             inputRange,
             outputRange: inputRange.map((_, i) => (index === i ? 1 : 0)),
-        });
-        return { transform: [{ scale }] };
-    }, [index, inputRange, scrollDirection]);
+        }),
+        [index, inputRange],
+    );
+
+    const zoom = React.useCallback(() => {
+        const scale = scrollDirection.interpolate(config);
+        return [{ transform: [{ scale }] }];
+    }, [config, scrollDirection]);
 
     const fade = React.useCallback(() => {
-        const opacity = scrollDirection.interpolate({
-            inputRange,
-            outputRange: inputRange.map((_, i) => (index === i ? 1 : 0)),
-        });
+        const opacity = scrollDirection.interpolate(config);
         return { opacity };
-    }, [index, inputRange, scrollDirection]);
+    }, [config, scrollDirection]);
+
+    const zoomAndFade = React.useCallback(() => {
+        const scale = scrollDirection.interpolate(config);
+        const opacity = scrollDirection.interpolate(config);
+        return [{ opacity }, { transform: [{ scale }] }];
+    }, [config, scrollDirection]);
 
     const animation = React.useMemo(() => {
-        if (slideAnimationType === 'slide') {
+        if (['slide'].includes(slideAnimationType)) {
             return {};
         }
-        const effects = { zoom, fade };
+        const effects = { zoom, fade, zoomAndFade };
         return effects[slideAnimationType]();
-    }, [fade, slideAnimationType, zoom]);
+    }, [fade, slideAnimationType, zoom, zoomAndFade]);
 
     return (
-        <RNImage
+        <Animated.Image
             source={image}
             resizeMode="cover"
             style={[
                 {
                     width: WIDTH,
                     height: HEIGHT,
+                    backgroundColor: '#AAAAAA',
                 },
                 animation,
             ]}

@@ -28,7 +28,11 @@ interface ThumbnailGalleryProps {
     horizontal?: boolean;
 }
 
-const ThumbnailGallery: React.FunctionComponent<ThumbnailGalleryProps> = ({ images, horizontal = true }) => {
+const ThumbnailGallery: React.FunctionComponent<ThumbnailGalleryProps> = ({
+    images,
+    slideAnimationType,
+    horizontal = true,
+}) => {
     const scrollX = React.useRef(new Animated.Value(0)).current;
     const scrollY = React.useRef(new Animated.Value(0)).current;
     const [activeImage, setActiveImage] = React.useState<number>(0);
@@ -44,6 +48,7 @@ const ThumbnailGallery: React.FunctionComponent<ThumbnailGalleryProps> = ({ imag
                 horizontal={horizontal}
                 images={images}
                 activeImage={activeImage}
+                slideAnimationType={slideAnimationType}
                 scrollX={scrollX}
                 scrollY={scrollY}
                 onChangeActiveImage={setActiveImage}

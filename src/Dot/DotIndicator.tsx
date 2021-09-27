@@ -1,51 +1,17 @@
 import React from 'react';
-import { Animated, Dimensions, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, View, ViewStyle } from 'react-native';
 import Dot from './Dot';
 import { DotType } from '../types';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
-const DOT_SIZE = 10;
-
-const styles = StyleSheet.create({
-    container: {
-        height: HEIGHT,
-        width: WIDTH,
-    },
-    horizontalPagination: {
-        flexDirection: 'row',
-        position: 'absolute',
-        left: WIDTH / 3 - 20,
-        bottom: 50,
-    },
-    verticalPagination: {
-        position: 'absolute',
-        top: HEIGHT / 3,
-        left: 20,
-    },
-    horizontalDot: {
-        width: DOT_SIZE,
-        height: DOT_SIZE,
-        borderRadius: 1,
-        marginRight: DOT_SIZE,
-    },
-    verticalDot: {
-        width: DOT_SIZE,
-        height: DOT_SIZE,
-        borderRadius: 1,
-        marginBottom: DOT_SIZE,
-    },
-    dotIndicator: {
-        width: DOT_SIZE,
-        height: DOT_SIZE,
-        position: 'absolute',
-    },
-});
 
 interface DotIndicatorProps {
     measure: number;
+    dotSize: number;
     inputRange: number[];
     dotColor: string;
     horizontal: boolean;
+    roundDot: boolean;
     images: any[];
     withZoom: boolean;
     dotType: DotType;
@@ -54,15 +20,27 @@ interface DotIndicatorProps {
 
 const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
     measure,
+    dotSize,
     inputRange,
     dotColor,
     horizontal,
+    roundDot,
     images,
     dotType,
     withZoom,
     scrollDirection,
 }) => {
-    const dotStyle = React.useMemo(() => (horizontal ? styles.horizontalDot : styles.verticalDot), [horizontal]);
+    const dotStyle = React.useMemo(
+        () => ({
+            width: dotSize,
+            height: dotSize,
+            backgroundColor: dotColor,
+            zIndex: 1000,
+            borderRadius: roundDot ? dotSize / 2 : dotSize / 10,
+            ...(horizontal ? { marginRight: dotSize } : { marginBottom: dotSize }),
+        }),
+        [dotColor, dotSize, horizontal, roundDot],
+    );
 
     const renderIndicators = React.useCallback(
         () =>
@@ -75,11 +53,11 @@ const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
                     withZoom={withZoom}
                     dimension={measure}
                     scrollDirection={scrollDirection}
-                    style={[dotStyle, { backgroundColor: dotColor }]}
+                    style={dotStyle}
                     key={`dot-indicator-${index}`}
                 />
             )),
-        [dotColor, dotStyle, dotType, horizontal, images, inputRange, measure, scrollDirection, withZoom],
+        [dotStyle, dotType, horizontal, images, inputRange, measure, scrollDirection, withZoom],
     );
 
     const renderSubView = React.useCallback(() => {
@@ -94,7 +72,11 @@ const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
             return (
                 <Animated.View
                     style={[
-                        styles.dotIndicator,
+                        {
+                            width: dotSize,
+                            height: dotSize,
+                            position: 'absolute',
+                        },
                         { backgroundColor: dotColor },
                         {
                             transform: [
@@ -103,7 +85,7 @@ const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
                                           {
                                               translateX: Animated.divide(scrollDirection, measure).interpolate({
                                                   inputRange: [0, 1],
-                                                  outputRange: [0, DOT_SIZE * 2],
+                                                  outputRange: [0, dotSize * 2],
                                               }),
                                           },
                                           {
@@ -117,7 +99,7 @@ const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
                                           {
                                               translateY: Animated.divide(scrollDirection, measure).interpolate({
                                                   inputRange: [0, 1],
-                                                  outputRange: [0, DOT_SIZE * 2],
+                                                  outputRange: [0, dotSize * 2],
                                               }),
                                           },
                                           {
@@ -135,12 +117,23 @@ const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
         }
 
         return null;
-    }, [dotColor, dotType, horizontal, images.length, measure, scrollDirection]);
+    }, [dotColor, dotSize, dotType, horizontal, images.length, measure, scrollDirection]);
 
-    const indicatorStyle = React.useMemo(
-        () => (horizontal ? styles.horizontalPagination : styles.verticalPagination),
-        [horizontal],
-    );
+    const indicatorStyle = React.useMemo((): ViewStyle => {
+        const index = dotSize > 10 ? 5 : 3;
+        return horizontal
+            ? {
+                  flexDirection: 'row',
+                  position: 'absolute',
+                  left: WIDTH / index - 20,
+                  bottom: 50,
+              }
+            : {
+                  position: 'absolute',
+                  top: HEIGHT / index,
+                  left: 20,
+              };
+    }, [dotSize, horizontal]);
 
     return (
         <View style={indicatorStyle}>
