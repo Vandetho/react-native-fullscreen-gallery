@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
 interface DotGalleryProps {
     images: any[];
     horizontal?: boolean;
+    withZoom?: boolean;
     dotColor?: string;
     dotType?: DotType;
 }
@@ -23,6 +24,7 @@ interface DotGalleryProps {
 const DotGallery: React.FunctionComponent<DotGalleryProps> = ({
     images,
     horizontal = true,
+    withZoom = false,
     dotColor = '#FFFFFF',
     dotType = 'expand',
 }) => {
@@ -70,6 +72,7 @@ const DotGallery: React.FunctionComponent<DotGalleryProps> = ({
                 dotType={dotType}
                 dotColor={dotColor}
                 horizontal={horizontal}
+                withZoom={withZoom}
                 images={images}
                 scrollX={scrollX}
                 scrollY={scrollY}

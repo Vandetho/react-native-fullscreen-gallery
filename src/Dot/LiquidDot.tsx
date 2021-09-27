@@ -4,17 +4,27 @@ import { Animated, StyleProp, ViewStyle } from 'react-native';
 interface LiquidDotProps {
     inputRange: number[];
     index: number;
+    withZoom: boolean;
     scrollValue: Animated.Value;
     style: StyleProp<ViewStyle>;
 }
 
-const LiquidDot: React.FunctionComponent<LiquidDotProps> = ({ inputRange, index, scrollValue, style }) => {
+const LiquidDot: React.FunctionComponent<LiquidDotProps> = ({ inputRange, index, scrollValue, withZoom, style }) => {
+    const scaleSize = scrollValue.interpolate({
+        inputRange,
+        outputRange: inputRange.map((_, i) => (index === i ? 2 : 1)),
+    });
+
     const opacity = scrollValue.interpolate({
         inputRange,
         outputRange: inputRange.map((_, i) => (index === i ? 1 : 0.5)),
     });
 
-    return <Animated.View style={[style, { opacity }]} />;
+    return (
+        <Animated.View
+            style={[style, { opacity }, withZoom && { transform: [{ scaleX: scaleSize }, { scaleY: scaleSize }] }]}
+        />
+    );
 };
 
 export default LiquidDot;

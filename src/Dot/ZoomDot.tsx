@@ -19,7 +19,9 @@ const ZoomDot: React.FunctionComponent<ZoomDotProps> = ({ inputRange, index, scr
         outputRange: inputRange.map((_, i) => (index === i ? 1 : 0.5)),
     });
 
-    return <Animated.View style={[style, { opacity }, { transform: [{ scaleX: scaleSize, scaleY: scaleSize }] }]} />;
+    return (
+        <Animated.View style={[style, { opacity }, { transform: [{ scaleX: scaleSize }, { scaleY: scaleSize }] }]} />
+    );
 };
 
 export default ZoomDot;

@@ -17,10 +17,11 @@ or
 
 ## Props
 
-Prop | Description | Type | Required | Default
+Prop | Required | Description | Type | Default
 ------ | ------ | ------ | ------ | ------
-`images` | Your array of images | `array` | ✔️
-`horizontal` | Scroll Orientation | `boolean` |  | `true`
-`indicatorMode` | Indicator mode | `thumbnail` `dot` | | `thumbnail`
-`dotColor` | Indicator Color | `string` | | `#FFFFFF`
-`dotType` | Indicator animation type | `expand` `rotary` `fade` `liquid` | | `expand`
+`images` | <center>✔</center> | Your array of images | `array`️
+`horizontal` |  | Scroll Orientation | `boolean` | `true`
+`indicatorMode` |  | Indicator mode | `thumbnail` `dot` | `thumbnail`
+`dotColor` |  | Indicator Color | `string` | `#FFFFFF`
+`dotType` |  | Indicator animation type | `expand` `rotary` `fade` `liquid` | `expand`
+`withZoom` |  | Only work with liquid animation for a zoom out effect | `boolean` | `false`

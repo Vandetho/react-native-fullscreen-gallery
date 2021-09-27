@@ -9,11 +9,13 @@ interface GalleryProps {
     indicatorMode?: 'thumbnail' | 'dot';
     dotColor?: string;
     dotType?: DotType;
+    withZoom?: boolean;
 }
 
 const Gallery: React.FunctionComponent<GalleryProps> = ({
     images,
     horizontal = true,
+    withZoom = false,
     indicatorMode = 'thumbnail',
     dotColor = '#FFFFFF',
     dotType = 'expand',
@@ -22,8 +24,16 @@ const Gallery: React.FunctionComponent<GalleryProps> = ({
         if (indicatorMode === 'thumbnail') {
             return <ThumbnailGallery images={images} horizontal={horizontal} />;
         }
-        return <DotGallery images={images} horizontal={horizontal} dotType={dotType} dotColor={dotColor} />;
-    }, [dotColor, dotType, horizontal, images, indicatorMode]);
+        return (
+            <DotGallery
+                images={images}
+                horizontal={horizontal}
+                dotType={dotType}
+                withZoom={withZoom}
+                dotColor={dotColor}
+            />
+        );
+    }, [dotColor, dotType, horizontal, images, indicatorMode, withZoom]);
 };
 
 export default Gallery;

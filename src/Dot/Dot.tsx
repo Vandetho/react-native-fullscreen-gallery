@@ -12,6 +12,7 @@ interface DotProps {
     index: number;
     dimension: number;
     horizontal: boolean;
+    withZoom: boolean;
     dotType: DotType;
     scrollValue: Animated.Value;
     style: StyleProp<ViewStyle>;

@@ -45,6 +45,7 @@ interface DotIndicatorProps {
     dotColor: string;
     horizontal: boolean;
     images: any[];
+    withZoom: boolean;
     dotType: DotType;
     scrollX: Animated.Value;
     scrollY: Animated.Value;
@@ -55,6 +56,7 @@ const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
     horizontal,
     images,
     dotType,
+    withZoom,
     scrollX,
     scrollY,
 }) => {
@@ -74,6 +76,7 @@ const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
                     inputRange={inputRange}
                     horizontal={horizontal}
                     index={index}
+                    withZoom={withZoom}
                     dimension={measure}
                     scrollValue={scroll}
                     style={[dotStyle, { backgroundColor: dotColor }]}
