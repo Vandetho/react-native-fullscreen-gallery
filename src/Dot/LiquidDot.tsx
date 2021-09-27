@@ -5,17 +5,23 @@ interface LiquidDotProps {
     inputRange: number[];
     index: number;
     withZoom: boolean;
-    scrollValue: Animated.Value;
+    scrollDirection: Animated.Value;
     style: StyleProp<ViewStyle>;
 }
 
-const LiquidDot: React.FunctionComponent<LiquidDotProps> = ({ inputRange, index, scrollValue, withZoom, style }) => {
-    const scaleSize = scrollValue.interpolate({
+const LiquidDot: React.FunctionComponent<LiquidDotProps> = ({
+    inputRange,
+    index,
+    scrollDirection,
+    withZoom,
+    style,
+}) => {
+    const scaleSize = scrollDirection.interpolate({
         inputRange,
         outputRange: inputRange.map((_, i) => (index === i ? 2 : 1)),
     });
 
-    const opacity = scrollValue.interpolate({
+    const opacity = scrollDirection.interpolate({
         inputRange,
         outputRange: inputRange.map((_, i) => (index === i ? 1 : 0.5)),
     });

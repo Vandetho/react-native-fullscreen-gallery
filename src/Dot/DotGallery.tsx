@@ -1,8 +1,8 @@
 import React from 'react';
-import { Animated, Dimensions, StyleSheet, View, ViewToken } from 'react-native';
+import { Animated, Dimensions, ImageSourcePropType, StyleSheet, View, ViewToken } from 'react-native';
 import ImageItem from '../ImageItem';
 import DotIndicator from './DotIndicator';
-import { DotType } from '../types';
+import { DotType, SlideAnimationType } from '../types';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
 });
 
 interface DotGalleryProps {
-    images: any[];
+    images: ImageSourcePropType[];
+    slideAnimationType: SlideAnimationType;
     horizontal?: boolean;
     withZoom?: boolean;
     dotColor?: string;
@@ -27,13 +28,31 @@ const DotGallery: React.FunctionComponent<DotGalleryProps> = ({
     withZoom = false,
     dotColor = '#FFFFFF',
     dotType = 'expand',
+    slideAnimationType = 'slide',
 }) => {
     const scrollX = React.useRef(new Animated.Value(0)).current;
     const scrollY = React.useRef(new Animated.Value(0)).current;
     const galleryRef = React.useRef(null);
     const [, setActiveItem] = React.useState(0);
 
-    const renderImage = React.useCallback(({ item }) => <ImageItem image={item} />, []);
+    const measure = React.useMemo(() => (horizontal ? WIDTH : HEIGHT), [horizontal]);
+
+    const inputRange = React.useMemo(() => images.map((_, index) => measure * index), [images, measure]);
+
+    const scrollDirection = React.useMemo(() => (horizontal ? scrollX : scrollY), [horizontal, scrollX, scrollY]);
+
+    const renderImage = React.useCallback(
+        ({ item, index }: { item: ImageSourcePropType; index: number }) => (
+            <ImageItem
+                inputRange={inputRange}
+                scrollDirection={scrollDirection}
+                image={item}
+                index={index}
+                slideAnimationType={slideAnimationType}
+            />
+        ),
+        [inputRange, scrollDirection, slideAnimationType],
+    );
 
     const snapToInterval = React.useMemo(() => (horizontal ? WIDTH : HEIGHT), [horizontal]);
 
@@ -69,13 +88,14 @@ const DotGallery: React.FunctionComponent<DotGalleryProps> = ({
                 />
             </View>
             <DotIndicator
+                measure={measure}
+                inputRange={inputRange}
                 dotType={dotType}
                 dotColor={dotColor}
                 horizontal={horizontal}
                 withZoom={withZoom}
                 images={images}
-                scrollX={scrollX}
-                scrollY={scrollY}
+                scrollDirection={scrollDirection}
             />
         </React.Fragment>
     );

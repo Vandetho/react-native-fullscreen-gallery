@@ -14,7 +14,7 @@ interface DotProps {
     horizontal: boolean;
     withZoom: boolean;
     dotType: DotType;
-    scrollValue: Animated.Value;
+    scrollDirection: Animated.Value;
     style: StyleProp<ViewStyle>;
 }
 

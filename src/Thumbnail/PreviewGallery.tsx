@@ -1,11 +1,20 @@
 import React from 'react';
-import { Animated, Dimensions, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import {
+    Animated,
+    Dimensions,
+    FlatList,
+    ImageSourcePropType,
+    NativeScrollEvent,
+    NativeSyntheticEvent,
+} from 'react-native';
 import ImageItem from '../ImageItem';
+import { SlideAnimationType } from '../types';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('screen');
 
 interface PreviewGalleryProps {
-    images: any[];
+    images: ImageSourcePropType[];
+    slideAnimationType?: SlideAnimationType;
     activeImage: number;
     horizontal?: boolean;
     scrollX: Animated.Value;
@@ -16,6 +25,7 @@ interface PreviewGalleryProps {
 const PreviewGallery: React.FunctionComponent<PreviewGalleryProps> = ({
     images,
     activeImage,
+    slideAnimationType,
     horizontal = true,
     scrollX,
     scrollY,
@@ -29,7 +39,24 @@ const PreviewGallery: React.FunctionComponent<PreviewGalleryProps> = ({
         }
     }, [activeImage, images]);
 
-    const renderItem = React.useCallback(({ item }) => <ImageItem image={item} />, []);
+    const measure = React.useMemo(() => (horizontal ? WIDTH : HEIGHT), [horizontal]);
+
+    const scrollDirection = React.useMemo(() => (horizontal ? scrollX : scrollY), [horizontal, scrollX, scrollY]);
+
+    const inputRange = React.useMemo(() => images.map((_, index) => measure * index), [images, measure]);
+
+    const renderItem = React.useCallback(
+        ({ item, index }: { item: ImageSourcePropType; index: number }) => (
+            <ImageItem
+                image={item}
+                index={index}
+                slideAnimationType={slideAnimationType}
+                inputRange={inputRange}
+                scrollDirection={scrollDirection}
+            />
+        ),
+        [inputRange, scrollDirection, slideAnimationType],
+    );
 
     const onMomentumScrollEnd = React.useCallback(
         (event: NativeSyntheticEvent<NativeScrollEvent>) => {

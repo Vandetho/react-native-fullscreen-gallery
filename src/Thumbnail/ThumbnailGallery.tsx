@@ -1,7 +1,8 @@
 import React from 'react';
-import { Animated, Dimensions, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, ImageSourcePropType, StyleSheet, View } from 'react-native';
 import IndicatorGallery from './IndicatorGallery';
 import PreviewGallery from './PreviewGallery';
+import { SlideAnimationType } from '../types';
 
 const styles = StyleSheet.create({
     container: {},
@@ -22,7 +23,8 @@ const styles = StyleSheet.create({
 });
 
 interface ThumbnailGalleryProps {
-    images: any[];
+    images: ImageSourcePropType[];
+    slideAnimationType: SlideAnimationType;
     horizontal?: boolean;
 }
 

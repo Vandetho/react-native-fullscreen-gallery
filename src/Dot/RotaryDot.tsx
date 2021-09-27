@@ -5,17 +5,23 @@ interface RotaryDotProps {
     inputRange: number[];
     index: number;
     horizontal: boolean;
-    scrollValue: Animated.Value;
+    scrollDirection: Animated.Value;
     style: StyleProp<ViewStyle>;
 }
 
-const RotaryDot: React.FunctionComponent<RotaryDotProps> = ({ inputRange, index, horizontal, scrollValue, style }) => {
-    const scaleSize = scrollValue.interpolate({
+const RotaryDot: React.FunctionComponent<RotaryDotProps> = ({
+    inputRange,
+    index,
+    horizontal,
+    scrollDirection,
+    style,
+}) => {
+    const scaleSize = scrollDirection.interpolate({
         inputRange,
         outputRange: inputRange.map((_, i) => (index === i ? 2 : index - 1 === i || index + 1 === i ? 1 : 0)),
     });
 
-    const opacity = scrollValue.interpolate({
+    const opacity = scrollDirection.interpolate({
         inputRange,
         outputRange: inputRange.map((_, i) => (index === i ? 1 : 0.5)),
     });

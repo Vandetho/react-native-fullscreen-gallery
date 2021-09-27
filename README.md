@@ -19,9 +19,10 @@ or
 
 Prop | Required | Description | Type | Default
 ------ | ------ | ------ | ------ | ------
-`images` | <center>✔</center> | Your array of images | `array`️
+`images` | <center>✔</center> | Your array of images | `array`  or `ImageSourcePropType[]`️
 `horizontal` |  | Scroll Orientation | `boolean` | `true`
 `indicatorMode` |  | Indicator mode | `thumbnail` `dot` | `thumbnail`
+`slideAnimationType` |  | Slide animation Type | `slide` `zoom` `fade` | `slide`
 `dotColor` |  | Indicator Color | `string` | `#FFFFFF`
 `dotType` |  | Indicator animation type | `expand` `rotary` `fade` `liquid` | `expand`
 `withZoom` |  | Only work with liquid animation for a zoom out effect | `boolean` | `false`
