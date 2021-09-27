@@ -10,8 +10,10 @@ import ZoomDot from './ZoomDot';
 interface DotProps {
     inputRange: number[];
     index: number;
+    dotSize: number;
     dimension: number;
     horizontal: boolean;
+    roundDot: boolean;
     withZoom: boolean;
     dotType: DotType;
     scrollDirection: Animated.Value;

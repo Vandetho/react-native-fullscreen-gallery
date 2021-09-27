@@ -5,11 +5,21 @@ interface FadeDotProps {
     inputRange: number[];
     index: number;
     horizontal: boolean;
+    dotSize: number;
+    roundDot: boolean;
     scrollDirection: Animated.Value;
     style: StyleProp<ViewStyle>;
 }
 
-const FadeDot: React.FunctionComponent<FadeDotProps> = ({ inputRange, index, horizontal, scrollDirection, style }) => {
+const FadeDot: React.FunctionComponent<FadeDotProps> = ({
+    inputRange,
+    index,
+    horizontal,
+    dotSize,
+    roundDot,
+    scrollDirection,
+    style,
+}) => {
     const scaleSize = scrollDirection.interpolate({
         inputRange,
         outputRange: inputRange.map((_, i) => (index === i ? 2 : 1)),
@@ -24,8 +34,20 @@ const FadeDot: React.FunctionComponent<FadeDotProps> = ({ inputRange, index, hor
         () => (horizontal ? { scaleX: scaleSize } : { scaleY: scaleSize }),
         [scaleSize, horizontal],
     );
+    const borderRadius = React.useMemo(
+        () =>
+            roundDot
+                ? {
+                      borderRadius: scrollDirection.interpolate({
+                          inputRange,
+                          outputRange: inputRange.map((_, i) => (index === i ? dotSize / 2.5 : dotSize / 2)),
+                      }),
+                  }
+                : {},
+        [dotSize, index, inputRange, roundDot, scrollDirection],
+    );
 
-    return <Animated.View style={[style, { opacity }, { transform: [scale] }]} />;
+    return <Animated.View style={[style, { opacity }, borderRadius, { transform: [scale] }]} />;
 };
 
 export default FadeDot;

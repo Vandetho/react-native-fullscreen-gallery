@@ -47,6 +47,8 @@ const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
             images.map((_: any, index: number) => (
                 <Dot
                     dotType={dotType}
+                    roundDot={roundDot}
+                    dotSize={dotSize}
                     inputRange={inputRange}
                     horizontal={horizontal}
                     index={index}
@@ -57,7 +59,7 @@ const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
                     key={`dot-indicator-${index}`}
                 />
             )),
-        [dotStyle, dotType, horizontal, images, inputRange, measure, scrollDirection, withZoom],
+        [dotSize, dotStyle, dotType, horizontal, images, inputRange, measure, roundDot, scrollDirection, withZoom],
     );
 
     const renderSubView = React.useCallback(() => {
@@ -75,9 +77,13 @@ const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
                         {
                             width: dotSize,
                             height: dotSize,
-                            borderRadius: dotSize / 2,
                             position: 'absolute',
                         },
+                        roundDot
+                            ? {
+                                  borderRadius: dotSize / 2,
+                              }
+                            : {},
                         { backgroundColor: dotColor },
                         {
                             transform: [
@@ -118,7 +124,7 @@ const DotIndicator: React.FunctionComponent<DotIndicatorProps> = ({
         }
 
         return null;
-    }, [dotColor, dotSize, dotType, horizontal, images.length, measure, scrollDirection]);
+    }, [dotColor, dotSize, dotType, horizontal, images.length, measure, roundDot, scrollDirection]);
 
     const indicatorStyle = React.useMemo((): ViewStyle => {
         const index = dotSize > 10 ? 5 : 3;
