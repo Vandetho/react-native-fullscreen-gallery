@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Dimensions, ImageSourcePropType, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, ImageResizeMode, ImageSourcePropType, StyleSheet, View } from 'react-native';
 import IndicatorGallery from './IndicatorGallery';
 import PreviewGallery from './PreviewGallery';
 import { SlideAnimationType } from '../types';
@@ -25,11 +25,13 @@ const styles = StyleSheet.create({
 interface ThumbnailGalleryProps {
     images: ImageSourcePropType[];
     slideAnimationType: SlideAnimationType;
+    resizeMode?: ImageResizeMode;
     horizontal?: boolean;
 }
 
 const ThumbnailGallery: React.FunctionComponent<ThumbnailGalleryProps> = ({
     images,
+    resizeMode,
     slideAnimationType,
     horizontal = true,
 }) => {
@@ -47,6 +49,7 @@ const ThumbnailGallery: React.FunctionComponent<ThumbnailGalleryProps> = ({
             <PreviewGallery
                 horizontal={horizontal}
                 images={images}
+                resizeMode={resizeMode}
                 activeImage={activeImage}
                 slideAnimationType={slideAnimationType}
                 scrollX={scrollX}

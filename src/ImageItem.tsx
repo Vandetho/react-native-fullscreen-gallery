@@ -1,11 +1,12 @@
 import React from 'react';
-import { Animated, Dimensions, ImageSourcePropType } from 'react-native';
+import { Animated, Dimensions, ImageResizeMode, ImageSourcePropType } from 'react-native';
 import { SlideAnimationType } from './types';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('window');
 
 interface ImageItemProps {
     inputRange: number[];
+    resizeMode?: ImageResizeMode;
     image: ImageSourcePropType;
     scrollDirection: Animated.Value;
     slideAnimationType: SlideAnimationType;
@@ -17,6 +18,7 @@ const ImageItem: React.FunctionComponent<ImageItemProps> = ({
     image,
     slideAnimationType,
     index,
+    resizeMode = 'contain',
     scrollDirection,
 }) => {
     const config = React.useMemo(
@@ -54,7 +56,7 @@ const ImageItem: React.FunctionComponent<ImageItemProps> = ({
     return (
         <Animated.Image
             source={image}
-            resizeMode="cover"
+            resizeMode={resizeMode}
             style={[
                 {
                     width: WIDTH,

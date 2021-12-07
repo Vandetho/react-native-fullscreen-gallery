@@ -3,6 +3,7 @@ import {
     Animated,
     Dimensions,
     FlatList,
+    ImageResizeMode,
     ImageSourcePropType,
     NativeScrollEvent,
     NativeSyntheticEvent,
@@ -15,6 +16,7 @@ const { width: WIDTH, height: HEIGHT } = Dimensions.get('screen');
 interface PreviewGalleryProps {
     images: ImageSourcePropType[];
     slideAnimationType: SlideAnimationType;
+    resizeMode?: ImageResizeMode;
     activeImage: number;
     horizontal?: boolean;
     scrollX: Animated.Value;
@@ -25,6 +27,7 @@ interface PreviewGalleryProps {
 const PreviewGallery: React.FunctionComponent<PreviewGalleryProps> = ({
     images,
     activeImage,
+    resizeMode,
     slideAnimationType,
     horizontal = true,
     scrollX,
@@ -50,12 +53,13 @@ const PreviewGallery: React.FunctionComponent<PreviewGalleryProps> = ({
             <ImageItem
                 image={item}
                 index={index}
+                resizeMode={resizeMode}
                 slideAnimationType={slideAnimationType}
                 inputRange={inputRange}
                 scrollDirection={scrollDirection}
             />
         ),
-        [inputRange, scrollDirection, slideAnimationType],
+        [inputRange, resizeMode, scrollDirection, slideAnimationType],
     );
 
     const onMomentumScrollEnd = React.useCallback(

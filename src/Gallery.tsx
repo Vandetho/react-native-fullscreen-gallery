@@ -2,13 +2,14 @@ import React from 'react';
 import { DotGallery } from './Dot';
 import { ThumbnailGallery } from './Thumbnail';
 import { DotType, SlideAnimationType } from './types';
-import { ImageSourcePropType } from 'react-native';
+import { ImageResizeMode, ImageSourcePropType } from 'react-native';
 
 interface GalleryProps {
     images: ImageSourcePropType[];
     horizontal?: boolean;
     indicatorMode?: 'thumbnail' | 'dot';
     slideAnimationType?: SlideAnimationType;
+    resizeMode?: ImageResizeMode;
     roundDot?: boolean;
     dotSize?: number;
     dotColor?: string;
@@ -22,6 +23,7 @@ const Gallery: React.FunctionComponent<GalleryProps> = ({
     withZoom = false,
     roundDot = false,
     dotSize = 10,
+    resizeMode,
     indicatorMode = 'thumbnail',
     dotColor = '#FFFFFF',
     dotType = 'expand',
@@ -29,12 +31,20 @@ const Gallery: React.FunctionComponent<GalleryProps> = ({
 }) => {
     return React.useMemo(() => {
         if (indicatorMode === 'thumbnail') {
-            return <ThumbnailGallery images={images} horizontal={horizontal} slideAnimationType={slideAnimationType} />;
+            return (
+                <ThumbnailGallery
+                    resizeMode={resizeMode}
+                    images={images}
+                    horizontal={horizontal}
+                    slideAnimationType={slideAnimationType}
+                />
+            );
         }
         return (
             <DotGallery
                 images={images}
                 horizontal={horizontal}
+                resizeMode={resizeMode}
                 dotType={dotType}
                 dotSize={dotSize}
                 withZoom={withZoom}
@@ -43,7 +53,18 @@ const Gallery: React.FunctionComponent<GalleryProps> = ({
                 slideAnimationType={slideAnimationType}
             />
         );
-    }, [dotColor, dotSize, dotType, horizontal, images, indicatorMode, roundDot, slideAnimationType, withZoom]);
+    }, [
+        dotColor,
+        dotSize,
+        dotType,
+        horizontal,
+        images,
+        indicatorMode,
+        resizeMode,
+        roundDot,
+        slideAnimationType,
+        withZoom,
+    ]);
 };
 
 export default Gallery;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Dimensions, ImageSourcePropType, StyleSheet, View, ViewToken } from 'react-native';
+import { Animated, Dimensions, ImageResizeMode, ImageSourcePropType, StyleSheet, View, ViewToken } from 'react-native';
 import ImageItem from '../ImageItem';
 import DotIndicator from './DotIndicator';
 import { DotType, SlideAnimationType } from '../types';
@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
 interface DotGalleryProps {
     images: ImageSourcePropType[];
     slideAnimationType: SlideAnimationType;
+    resizeMode?: ImageResizeMode;
     roundDot: boolean;
     horizontal?: boolean;
     dotSize: number;
@@ -28,6 +29,7 @@ const DotGallery: React.FunctionComponent<DotGalleryProps> = ({
     images,
     slideAnimationType,
     dotSize,
+    resizeMode,
     horizontal = true,
     roundDot = false,
     withZoom = false,
@@ -50,12 +52,13 @@ const DotGallery: React.FunctionComponent<DotGalleryProps> = ({
             <ImageItem
                 inputRange={inputRange}
                 scrollDirection={scrollDirection}
+                resizeMode={resizeMode}
                 image={item}
                 index={index}
                 slideAnimationType={slideAnimationType}
             />
         ),
-        [inputRange, scrollDirection, slideAnimationType],
+        [inputRange, resizeMode, scrollDirection, slideAnimationType],
     );
 
     const snapToInterval = React.useMemo(() => (horizontal ? WIDTH : HEIGHT), [horizontal]);
